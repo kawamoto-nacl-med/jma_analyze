@@ -1,0 +1,69 @@
+<h1><%= params[:source] %></h1>
+<p>行数：<%= @source.size %>行</p>
+<p><%= link_to "全文表示",  "/source?source=#{params[:source]}", target: :_blank %></p>
+
+<h2>このプログラムを呼び出しているプログラム</h2>
+<ul>
+  <% @parents.each do |parent| %>
+    <li><%= link_to parent, "/analyze?source=#{parent}", target: :_blank %></li>
+  <% end %>
+  <% if @parents.empty? %>
+    <p>なし</p>
+  <% end %>
+</ul>
+
+
+<% @source.divisions.each do |division_name, division| %>
+  <h2 id=<%= division_name.downcase %>><%= division_name %></h2>
+  <pre class="pre-scrollable"><%= division.source.map {|sentence| sentence.to_s}.join %></pre>
+
+  <% division.sections.each do |section_name, section| %>
+    <h3><%= "#{section_name} SECTION" %></h3>
+    <pre class="pre-scrollable"><%= section.source.map {|sentence| sentence.to_s}.join %></pre>
+
+    <% copybooks = section.collect_copybook %>
+    <% unless copybooks.empty? %>
+      <h4>COPYBOOK</h4>
+      <ul>
+        <% copybooks.each do |copybook| %>
+          <% glob = Dir.glob("copy/**/#{copybook}*", base: "app/assets/sources/jma-receipt/cobol/") %>
+          <% case glob.size %>
+          <% when 1 %>
+            <li><%= link_to copybook, "/source?source=#{glob.first}", target: :_blank %></li>
+          <% else %>
+            <li><%= copybook %></li>
+          <% end %>
+        <% end %>
+      </ul>
+    <% end %>
+
+    <% calls = section.collect_call %>
+    <% unless calls.empty? %>
+      <h4>CALL</h4>
+      <ul>
+        <% calls.each do |call| %>
+          <% glob = Dir.glob("**/#{call}.CBL", base: "app/assets/sources/jma-receipt/cobol/") %>
+          <% case glob.size %>
+          <% when 1 %>
+            <li><%= link_to call, "/analyze?source=#{glob.first}", target: :_blank %></li>
+          <% else %>
+            <li><%= call %></li>
+          <% end %>
+          
+        <% end %>
+      </ul>
+    <% end %>
+
+    <% performs = section.collect_perform %>
+    <% unless performs.empty? %>
+      <h4>PERFORM</h4>
+      <ul>
+        <% performs.each do |perform| %>
+          <li><%= perform %></li>
+        <% end %>
+      </ul>
+    <% end %>
+
+  <% end %>
+<% end %>
+

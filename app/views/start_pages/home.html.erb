@@ -1,0 +1,8 @@
+<h1>jma-receipt</h1>
+<h2>COBOL</h2>
+<ul>
+  <% Dir.glob("**/*.CBL", base: "app/assets/sources/jma-receipt/cobol/").each do |source| %>
+    <li><%= link_to source, "/analyze?source=#{source}" %></li>
+  <% end %>
+</ul>
+
