@@ -1,24 +1,27 @@
-# README
+# Rubyバージョン
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+.ruby-versionファイルをご確認ください。予定ではテスト開発と同バージョンにするつもりです。
 
-Things you may want to cover:
+# 初回セットアップ
 
-* Ruby version
+## gemのインストール
 
-* System dependencies
+```
+$ bundle install
+```
 
-* Configuration
+## jma-receiptのソースを取得
 
-* Database creation
+こちらのレポジトリにはjma-receiptのソースを同梱していません。
+各自取得をお願いします。
+以下のファイルが存在するように、app/assets/sources/ 以下に取得をお願いします。
 
-* Database initialization
+```
+$ ls app/assets/sources/jma-receipt/cobol/orca00/ORCGM00.CBL
+```
 
-* How to run the test suite
+# railsの起動
 
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+```
+$ bundle exec rails s
+```
