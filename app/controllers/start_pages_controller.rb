@@ -3,6 +3,8 @@ class StartPagesController < ApplicationController
   end
 
   def analyze
+    redirect_to "/static_docs/#{params[:source].gsub(/\.CBL$/, "")}" and return if ENV["STATIC_MODE"]  == "true"
+
     file_name = File.basename(params[:source], ".CBL")
     @parents = []
     Dir.glob("**/*.CBL", base: "app/assets/sources/jma-receipt/cobol/").each do |source|
