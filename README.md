@@ -54,3 +54,25 @@ Exiting
 
 ```
 （参考） https://qiita.com/NaokiIshimura/items/8203f74f8dfd5f6b87a0
+
+# 静的HTMLファイル
+
+現状動作がかなり重いため、静的HTMLを生成する機能を追加しました。
+
+## 生成方法
+
+以下を実行します。
+
+**注意：3時間以上かかります！時間のある時に実行してください。**
+
+```
+$ bundle exec rake docs:generate
+```
+
+## 起動方法
+
+環境変数を指定してrailsを起動します。
+
+```
+$ STATIC_MODE=true bundle exec rails s
+```
